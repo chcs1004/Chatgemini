@@ -1,4 +1,11 @@
-from google.cloud import aiplatform
+try:
+    from google.cloud import aiplatform
+except ModuleNotFoundError as e:
+    raise ModuleNotFoundError(
+        "La biblioteca google-cloud-aiplatform no está instalada. "
+        "Instálala ejecutando: pip install google-cloud-aiplatform"
+    )
+
 import streamlit as st
 
 # Configuración del cliente de Vertex AI (Gemini)
@@ -52,3 +59,4 @@ if prompt := st.chat_input():
     msg = response.predictions[0].get("content", "No response")
     st.session_state.messages.append({"role": "assistant", "content": msg})
     st.chat_message("assistant").write(msg)
+
